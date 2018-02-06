@@ -1,0 +1,19 @@
+Pre-condition:
+	Systemet er i en definert tilstand
+
+Guarantee:
+	Success guarantee:
+	Aktøren er brakt til den bestilte etasjen.
+
+	Minimal guarantee:
+	Systemet tar aktøren i feil retning før aktøren blir levert til den bestilte etasjen.
+
+Trigger:
+	Aktøren interagerer med systemet.
+
+Main success senario:
+	1. Aktør bestiller heisen til sin etasje
+	2. Systemet leverer heisen
+	3. Aktør bestiller etasje
+	4. Systemet tar aktøren til bestilt etasje
+

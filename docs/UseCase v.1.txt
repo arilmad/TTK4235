@@ -1,0 +1,4 @@
+1. Aktør bestiller heisen til sin etasje
+2. Systemet leverer heisen
+3. Aktør bestiller etasje
+4. Systemet tar aktøren til bestilt etasje
