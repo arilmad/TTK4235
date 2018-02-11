@@ -9,44 +9,53 @@ int main(){
 
 	
 	initialize_lift();
-
+	
 	//Makes sure the lift is at defined state and sets floor indicator lamp.
 	int current_floor = enter_defined_state();
 	elev_set_floor_indicator(current_floor);
-	int onetime = 0;
+	
 
 	while(1){
-
 		
+
+
+		receive_orders();
+
 		//Initial condition. Lift is at this stage not summoned by any floor.
-		//elev_motor_direction_t current_dir = DIRN_STOP;
-
-		//floor_summ is now the floor to which the lift is summoned, -1 indicates no buttons are pressed
-
+		//floor_summ is the floor to which the lift is summoned, -1 indicates no buttons are pressed
 		int floor_summ = any_button();
-		
-		
-
 		if(floor_summ != -1){
 
-			floor_summ = floor_summ -1;
-			
-			printf("ANYBUTTON ");
+			//Securing 0 indexing of floors for further operations
+			floor_summ = floor_summ -1;	
+
+			printf("FLOOR REGISTERED");
 			printf("%d", floor_summ);
+
 			//Lift refuses to move before the door is confirmed closed
-			while(!elev_get_door_open_lamp()){continue;}
-			
-			//printf("NEXT LEVEL SHIT");
+			//while(!elev_get_door_open_lamp()){continue;}
+
+
+			//Lift approaches destination and calculates in which direction to move
 			move_to_floor(current_floor, floor_summ);
 
-			while(elev_get_floor_sensor_signal() != floor_summ){continue;}
-			onetime = 1;
 
-			elev_set_motor_direction(DIRN_STOP);
+
+			//Lift continues to move until a prioritized floor has been reached
+			while(1){
+				int stop_now = prioritized_floor(elev_get_floor_sensor_signal(), elev_get_motor_direction());
+				if(stop_now){
+					elev_set_motor_direction(DIRN_STOP);
+					break;
+				}
+				else{continue;}
+			}
+			
 
 			current_floor = elev_get_floor_sensor_signal();
+					
+				//floor_summ = -1;
 			
-			//floor_summ = -1;
 
 
 

@@ -66,6 +66,12 @@ void elev_set_motor_direction(elev_motor_direction_t dirn) {
     }
 }
 
+int elev_get_motor_direction(void){
+
+    return(io_read_analog(MOTORDIR));
+}
+
+
 void elev_set_door_open_lamp(int value) {
     if (value)
         io_set_bit(LIGHT_DOOR_OPEN);
@@ -147,4 +153,10 @@ void elev_set_button_lamp(elev_button_type_t button, int floor, int value) {
         io_set_bit(lamp_channel_matrix[floor][button]);
     else
         io_clear_bit(lamp_channel_matrix[floor][button]);
+}
+
+
+int elev_get_button_lamp(int floor, int dir){
+    //returns 1 if lamp is illuminated, 0 if not
+    return(io_read_bit(lamp_channel_matrix[floor][dir]));
 }
