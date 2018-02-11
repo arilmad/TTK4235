@@ -1,13 +1,14 @@
 #include "assorted_funcs.h"
 #include "channels.h"
 #include "io.h"
-#include "elev.c"
+#include "elev.h"
 #include <stdlib.h>
+#include <comedilib.h>
 
 int main()
 {
 
-	
+
 	initialize_lift();
 
 	//Check if at defined state, carry on when at defined floor.
