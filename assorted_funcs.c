@@ -162,6 +162,8 @@ void receive_orders(void){
 
 	if(suspicious_floor != -1){
 		suspicious_floor = suspicious_floor -1;
+		printf("SUSP FLOOR: ");
+		printf("%d", suspicious_floor);
 
 		for(int i = 0; i<N_BUTTONS; i = i+1){
 			if(!(suspicious_floor==0 && i == 1)||(suspicious_floor==3 && i ==0)){

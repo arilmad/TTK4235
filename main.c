@@ -9,7 +9,7 @@ int main(){
 
 	
 	initialize_lift();
-	
+
 	//Makes sure the lift is at defined state and sets floor indicator lamp.
 	int current_floor = enter_defined_state();
 	elev_set_floor_indicator(current_floor);
@@ -19,13 +19,15 @@ int main(){
 		
 
 
-		receive_orders();
+		
 
 		//Initial condition. Lift is at this stage not summoned by any floor.
 		//floor_summ is the floor to which the lift is summoned, -1 indicates no buttons are pressed
 		int floor_summ = any_button();
+
 		if(floor_summ != -1){
 
+			receive_orders();
 			//Securing 0 indexing of floors for further operations
 			floor_summ = floor_summ -1;	
 
