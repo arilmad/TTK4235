@@ -47,6 +47,7 @@ void elev_set_motor_direction(elev_motor_direction_t dirn);
 void elev_set_door_open_lamp(int value);
 
 
+int elev_get_door_open_lamp(void);
 
 /**
   Get signal from obstruction switch.
