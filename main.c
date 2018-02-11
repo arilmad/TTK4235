@@ -17,8 +17,6 @@ int main(){
 
 	while(1){
 		
-
-
 		
 
 		//Initial condition. Lift is at this stage not summoned by any floor.
@@ -46,7 +44,17 @@ int main(){
 
 			//Lift continues to move until a prioritized floor has been reached
 			while(1){
-				int stop_now = prioritized_floor(elev_get_floor_sensor_signal(), elev_get_motor_direction());
+
+
+
+				//Sets floor indicator as we go
+				//KAN PUTTES ET ANNET STED
+				int current_state = elev_get_floor_sensor_signal();
+				if ((current_state != current_floor)&&(current_state != -1)){
+					elev_set_floor_indicator(current_state);
+					current_floor = current_state;
+				}
+				int stop_now = prioritized_floor(current_state, elev_get_motor_direction());
 				if(stop_now){
 					elev_set_motor_direction(DIRN_STOP);
 					break;
@@ -57,10 +65,8 @@ int main(){
 
 
 			current_floor = elev_get_floor_sensor_signal();
-			
-
-
 			clear_lamps(current_floor);
+
 					
 				//floor_summ = -1;
 			
