@@ -166,7 +166,7 @@ void receive_orders(void){
 		printf("%d", suspicious_floor);
 
 		for(int i = 0; i<N_BUTTONS; i = i+1){
-			if(!(suspicious_floor==0 && i == 1)||(suspicious_floor==3 && i ==0)){
+			if(!((suspicious_floor==0 && i == 1)||(suspicious_floor==3 && i ==0))){
 				if(elev_get_button_signal(i, suspicious_floor)){
 					elev_set_button_lamp(i, suspicious_floor, 1);
 					break;
@@ -177,4 +177,17 @@ void receive_orders(void){
 
 
 	}
+}
+
+void clear_lamps(int floor){
+
+	for(int i = 0; i<N_BUTTONS; i = i+1){
+			if(!((floor==0 && i == 1)||(floor==3 && i ==0))){
+				elev_set_button_lamp(i, floor, 0);
+										
+				
+			}
+	}
+
+
 }

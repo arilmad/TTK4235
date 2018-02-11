@@ -28,6 +28,7 @@ int main(){
 		if(floor_summ != -1){
 
 			receive_orders();
+
 			//Securing 0 indexing of floors for further operations
 			floor_summ = floor_summ -1;	
 
@@ -54,7 +55,12 @@ int main(){
 			}
 			
 
+
 			current_floor = elev_get_floor_sensor_signal();
+			
+
+
+			clear_lamps(current_floor);
 					
 				//floor_summ = -1;
 			
