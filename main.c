@@ -23,6 +23,7 @@ int main(){
 		//floor_summ is the floor to which the lift is summoned, -1 indicates no buttons are pressed
 		int floor_summ = any_button();
 
+
 		if(floor_summ != -1){
 
 			receive_orders();
@@ -44,20 +45,24 @@ int main(){
 
 			//Lift continues to move until a prioritized floor has been reached
 			while(1){
-
+				receive_orders();
 
 
 				//Sets floor indicator as we go
 				//KAN PUTTES ET ANNET STED
+
 				int current_state = elev_get_floor_sensor_signal();
 				if ((current_state != current_floor)&&(current_state != -1)){
 					elev_set_floor_indicator(current_state);
 					current_floor = current_state;
-				}
-				int stop_now = prioritized_floor(current_state, elev_get_motor_direction());
-				if(stop_now){
-					elev_set_motor_direction(DIRN_STOP);
+					int stop_now = prioritized_floor(current_state, elev_get_motor_direction());
+					if(stop_now){
+						elev_set_motor_direction(DIRN_STOP);
 					break;
+				}
+				
+				
+
 				}
 				else{continue;}
 			}
