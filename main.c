@@ -15,29 +15,51 @@ int main(){
 	int current_floor = enter_defined_state();
 	elev_set_floor_indicator(current_floor);
 
+	//initial DIR D/C
+	int prev_dir = 0;
+
+
 	while(1){
+
 
 		//Initial condition. Lift is at this stage not summoned by any floor.
 		//floor_summ is the floor to which the lift is summoned, -1 indicates no buttons are pressed
-		int floor_summ = any_button();
+		receive_orders();
 
 
-		if(floor_summ != -1){
+		if(VI HAR AKTIVE BESTILLINGER){
+
+
+			printf("REGISTERED DIR: ");
+			printf("%d", prev_dir);
+			printf("\n\n");
 
 			receive_orders();
 
 			//Securing 0 indexing of floors for further operations
-			floor_summ = floor_summ -1;	
+				
+			
 
-			printf("FLOOR REGISTERED");
-			printf("%d", floor_summ);
+			if(orders_ahead(current_floor, dir)){
+				while(DØR){continue;}
+				KJØR
+			}
+
+			else if(orders_ahead(current_floor, !dir)){
+				while(DØR){continue;}
+				dir = !dir
+
+
+				KJØR
+
+			}
 
 			//Lift refuses to move before the door is confirmed closed
 			//while(!elev_get_door_open_lamp()){continue;}
 
 
 			//Lift approaches destination and calculates in which direction to move
-			move_to_floor(current_floor, floor_summ);
+			//move_to_floor(current_floor, floor_summ);
 
 
 
@@ -55,6 +77,7 @@ int main(){
 					current_floor = current_state;
 					int stop_now = prioritized_floor(current_state, elev_get_motor_direction());
 					if(stop_now){
+						prev_dir = elev_get_motor_direction();
 						elev_set_motor_direction(DIRN_STOP);
 					break;
 				}

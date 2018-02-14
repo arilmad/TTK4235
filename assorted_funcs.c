@@ -96,6 +96,7 @@ int floor_order(int floor, int dir){
 
 
 int orders_ahead(int reached_floor, int dir){
+
 	//If elevator is either at top or bottom floor, it will request to stop
 	if(reached_floor == 3 || reached_floor == 0){
 		return 0;
@@ -103,7 +104,7 @@ int orders_ahead(int reached_floor, int dir){
 
 	//If direction is UP, elevator checks lights in floors above. 
 	else if(dir == 0){
-		for(int above = reached_floor+1; above <= N_FLOORS; above = above +1){
+		for(int above = reached_floor+1; above < N_FLOORS; above = above +1){
 			for (int lamp = 0; lamp < N_BUTTONS ; lamp += 1){
 				if(elev_get_button_lamp(above, lamp)){
 					printf("orders_ahead FANT ETASJER OVER!\n");
@@ -115,7 +116,7 @@ int orders_ahead(int reached_floor, int dir){
 
 	////If direction is DOWN, elevator checks lights in floors below.
 	else if(dir == 1){
-		for(int below = reached_floor-1; below <= 0; below = below -1){
+		for(int below = reached_floor-1; below > -1; below = below -1){
 			for (int lamp = 0; lamp < N_BUTTONS ; lamp += 1){
 				if(elev_get_button_lamp(below, lamp)){
 					printf("orders_ahead FANT ETASJER under!\n");
