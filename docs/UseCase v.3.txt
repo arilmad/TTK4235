@@ -3,17 +3,33 @@ Pre-condition:
 
 Guarantee:
 	Success guarantee:
-	Aktøren er brakt til den bestilte etasjen.
+	Bruker er brakt til den bestilte etasjen.
 
 	Minimal guarantee:
-	Systemet tar aktøren i feil retning før aktøren blir levert til den bestilte etasjen.
+	Systemet tar brukeren i feil retning før brukeren blir levert til den bestilte etasjen.
 
 Trigger:
-	Aktøren interagerer med systemet.
+	Bruker interagerer med systemet.
 
 Main success senario:
-	1. Aktør bestiller heisen til sin etasje
-	2. Systemet leverer heisen
-	3. Aktør bestiller etasje
-	4. Systemet tar aktøren til bestilt etasje
+	1. Bruker bestiller heisen opp eller ned fra sin etasje
+	2. Systemet leverer heisen til brukeren sin etasje
+	3. Systemet åpner døren
+	4. Bruker bestiller etasje
+	5. Systemet lukker døren
+	6. Systemet tar brukeren til bestilt etasje
 
+Extentions:
+	2a: Systemet er allerede i bruk.
+		1. Bruker må vente lengre på heisen
+
+	?????2b: Bruker bestiller heisen mot nåværende kjøreretning. Heisen har allerede en passasjer som skal av i brukers etasje, 
+	    og har en ventende bestilling i samme kjøreretning som brukeren.?????
+		1. Systemet prioriterer bestilling i nåværende kjøreretning.
+
+	4a: Bruker bestiller ikke etasje
+		1. Systemet åpner døren
+		2. Systemet lukker døren
+		3. Systemet behandler andre bestillinger
+
+	
