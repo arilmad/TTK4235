@@ -1,19 +1,36 @@
+#ifndef __ASSORTED_FUNCS_H__
+#define __ASSORTED_FUNCS_H__
+
 #include <time.h>
+#include "elev.h"
+#include "io.h"
+#include "orders.h"
+
+/*
+Initialization of the elevator.
+Elevator moves upwards and stops at nearest floor.
+@return Current floor
+*/
+int initialize_lift(void);
 
 
-//Lift moves upwards and stops at nearest floor if it is not at a defined floor. 
-int enter_defined_state(void);
-
-//resetting all buttons and sensors
-void initialize_lift(void);
-
-int any_button(void);
+/*
+Starte the motor.
+@param current_floor	Elevators current floor
+@param desired_floor	The requested floor to go to
+*/
 void move_to_floor(int current_floor, int desired_floor);
 
-int floor_order(int floor, int dir);
-int prioritized_floor(int reached_floor, int dir);
-int orders_ahead(int floor, int dir);
-void receive_orders(void);
-void clear_lamps(int floor);
+
+/*
+
+*/
 int timer(int count_s, clock_t reference);
+
+
+/*
+
+*/
 void set_door_open_for_n_seconds(int n_seconds);
+
+#endif	//#ifndef __ASSORTED_FUNCS_H__

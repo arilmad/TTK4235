@@ -154,9 +154,3 @@ void elev_set_button_lamp(elev_button_type_t button, int floor, int value) {
     else
         io_clear_bit(lamp_channel_matrix[floor][button]);
 }
-
-
-int elev_get_button_lamp(int floor, int dir){
-    //returns 1 if lamp is illuminated, 0 if not
-    return(io_read_bit(lamp_channel_matrix[floor][dir]));
-}
