@@ -4,6 +4,7 @@
 #include "elev.h"
 #include <stdlib.h>
 #include <comedilib.h>
+#include <time.h>
 
 int main(){
 
@@ -13,11 +14,8 @@ int main(){
 	//Makes sure the lift is at defined state and sets floor indicator lamp.
 	int current_floor = enter_defined_state();
 	elev_set_floor_indicator(current_floor);
-	
 
 	while(1){
-		
-		
 
 		//Initial condition. Lift is at this stage not summoned by any floor.
 		//floor_summ is the floor to which the lift is summoned, -1 indicates no buttons are pressed
@@ -71,7 +69,7 @@ int main(){
 
 			current_floor = elev_get_floor_sensor_signal();
 			clear_lamps(current_floor);
-
+			set_door_open_for_n_seconds(3);
 					
 				//floor_summ = -1;
 			

@@ -1,4 +1,4 @@
-
+#include <time.h>
 
 
 //Lift moves upwards and stops at nearest floor if it is not at a defined floor. 
@@ -15,3 +15,5 @@ int prioritized_floor(int reached_floor, int dir);
 int orders_ahead(int floor, int dir);
 void receive_orders(void);
 void clear_lamps(int floor);
+int timer(int count_s, clock_t reference);
+void set_door_open_for_n_seconds(int n_seconds);
