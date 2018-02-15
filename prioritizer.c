@@ -20,34 +20,33 @@ int prioritized_floor(int current_floor, int dir)
 	printf("Orders ahead: ");
 	printf("%d\n", orders);
 
-
-	int ordered_at_current_floor = (get_order(current_floor, 2) || get_order(current_floor, dir));
-
-	if (ordered_at_current_floor)
+	if(current_floor == 3 || current_floor == 0 || get_order(current_floor, 2))
 	{
 		return 1;
 	}
 
-	if (!(orders_ahead(current_floor, dir)))
+	if (get_order(current_floor, dir))
+	{
+		return 1;
+	}
+	//else{printf("FLOOR_ORDER FEILER");}
+
+
+	if (get_order(current_floor, !dir) && (!(orders_ahead(current_floor, dir))))
 	{
 		return 1;
 	}
 	return 0;
-
 }
 
-int orders_ahead(int reached_floor, int dir){
+int orders_ahead(int current_floor, int dir){
 
 	//If elevator is either at top or bottom floor, it will request to stop
-	if(reached_floor == 3 || reached_floor == 0)
-	{
-		return 0;
-	}
 
 	//If direction is UP, elevator checks lights in floors above. 
-	else if (dir == 0)
+	if (dir == 0)
 	{
-		for (int above = reached_floor+1; above < N_FLOORS; above++)
+		for (int above = current_floor+1; above < N_FLOORS; above++)
 		{
 			for (int button = 0; button < N_BUTTONS ; button++)
 			{
@@ -61,7 +60,7 @@ int orders_ahead(int reached_floor, int dir){
 
 	////If direction is DOWN, elevator checks lights in floors below.
 	else if (dir == 1){
-		for (int below = reached_floor-1; below > -1; below--)
+		for (int below = current_floor-1; below > -1; below--)
 		{
 			for (int button = 0; button < N_BUTTONS ; button++)
 			{

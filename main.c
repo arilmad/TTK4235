@@ -35,11 +35,6 @@ int main(){
 
 		if (requested_floor)
 		{
-			if (requested_floor == current_floor)
-			{
-				clear_order(current_floor);
-			}
-
 			move_to_floor(current_floor, requested_floor - 1);
 			while (1) //Moving
 			{
@@ -75,6 +70,7 @@ int main(){
 				}
 				else if ((current_state != current_floor) && (current_state != -1))
 				{
+					printf("%d\n", current_state);
 					printf("Third if\n");
 					stop = prioritized_floor(current_state, current_dir);
 				}
