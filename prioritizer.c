@@ -8,7 +8,7 @@ int prioritized_floor(int current_floor, int dir)
 	//0 if it has an active order from reached floor in UP dir
 	//1 if there is and active order from reached floor in DOWN dir
 	//-1 elsewise
-	int ordered_at_current_floor = (get_order(floor, 2) || get_order(floor, dir));
+	int ordered_at_current_floor = (get_order(current_floor, 2) || get_order(current_floor, dir));
 
 	if (ordered_at_current_floor)
 	{
@@ -46,7 +46,7 @@ int orders_ahead(int current_floor, int dir)
 
 		else if (dir == 1)
 		{
-			for (int floor_below = current_floor -1; floor_below >= 0; floor_below--;)
+			for (int floor_below = current_floor -1; floor_below >= 0; floor_below--)
 			{
 				if (get_order(floor_below, button))
 				{

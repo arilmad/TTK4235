@@ -1,4 +1,5 @@
-#include <stdlib.c>
+#include <stdlib.h>
+#include <stdio.h>
 #include <time.h>
 
 #include "orders.h"
@@ -19,9 +20,8 @@ int main(){
 	int stop = 0;
 	int stop_button = 0;
 
-	initialize_lift(void);
+	current_floor = initialize_lift();
 
-	current_floor = enter_defined_state();
 	elev_set_floor_indicator(current_floor);
 
 	current_dir = 0; // 0 = Up, 1 = Down
@@ -39,7 +39,7 @@ int main(){
 				receive_orders();
 				current_state = elev_get_floor_sensor_signal();
 				stop_button = elev_get_stop_signal();
-				current_dir = elev_get_motor_direction()
+				current_dir = elev_get_motor_direction();
 
 				if (stop_button)
 				{

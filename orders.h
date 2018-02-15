@@ -25,6 +25,11 @@ Clear order on given floor
 */
 void clear_order(int floor);
 
+/*
+
+*/
+void clear_all_orders(void);
+
 
 /*
 Looks for pending orders

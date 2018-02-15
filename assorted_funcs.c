@@ -28,7 +28,6 @@ int initialize_lift(void)
 
 void move_to_floor(int current_floor, int desired_floor)
 {
-	printf("MOVETOFLOOR ACTIVATED\n");
 	if (current_floor < desired_floor)
 	{
 		elev_set_motor_direction(DIRN_UP);
@@ -64,7 +63,7 @@ void set_door_open_for_n_seconds(int n_seconds)
 	clock_t reference = clock();
 
 	while(1){
-		receive_orders();
+		recieve_orders();
 		if(timer(n_seconds, reference))
 		{
 			break;
