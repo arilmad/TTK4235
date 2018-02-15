@@ -63,7 +63,7 @@ void set_door_open_for_n_seconds(int n_seconds)
 	clock_t reference = clock();
 
 	while(1){
-		recieve_orders();
+		receive_orders();
 		if(timer(n_seconds, reference))
 		{
 			break;

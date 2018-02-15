@@ -1,6 +1,7 @@
 #ifndef __ORDERS_H__
 #define __ORDERS_H__
 
+#include <stdio.h>
 #include "elev.h"
 #include "orders.h"
 
@@ -16,7 +17,7 @@ int get_order(int floor, int button);
 /*
 Polls input channels to look for orders.
 */
-void recieve_orders(void);
+void receive_orders(void);
 
 
 /*

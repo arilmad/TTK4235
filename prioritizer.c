@@ -8,6 +8,19 @@ int prioritized_floor(int current_floor, int dir)
 	//0 if it has an active order from reached floor in UP dir
 	//1 if there is and active order from reached floor in DOWN dir
 	//-1 elsewise
+	int command = get_order(current_floor, 2);
+	int dir_button = get_order(current_floor, dir);
+	int orders = orders_ahead(current_floor, dir);
+	printf("Direction: ");
+	printf("%d\n", dir);
+	printf("Command button: ");
+	printf("%d\n", command);
+	printf("Dir button: ");
+	printf("%d\n", dir_button);
+	printf("Orders ahead: ");
+	printf("%d\n", orders);
+
+
 	int ordered_at_current_floor = (get_order(current_floor, 2) || get_order(current_floor, dir));
 
 	if (ordered_at_current_floor)
