@@ -36,32 +36,36 @@ int prioritized_floor(int current_floor, int dir)
 
 }
 
-int orders_ahead(int current_floor, int dir)
-{
+int orders_ahead(int reached_floor, int dir){
 
 	//If elevator is either at top or bottom floor, it will request to stop
-	if (current_floor == 3 || current_floor == 0)
+	if(reached_floor == 3 || reached_floor == 0)
 	{
 		return 0;
 	}
-	for (int button = 0; button < N_BUTTONS; button++)
+
+	//If direction is UP, elevator checks lights in floors above. 
+	else if (dir == 0)
 	{
-		if (dir == 0)
+		for (int above = reached_floor+1; above < N_FLOORS; above++)
 		{
-			for (int floor_above = current_floor + 1; floor_above < N_FLOORS; floor_above++)
+			for (int button = 0; button < N_BUTTONS ; button++)
 			{
-				if (get_order(floor_above, button))
+				if (get_order(above, button))
 				{
 					return 1;
 				}
 			}
 		}
+	}
 
-		else if (dir == 1)
+	////If direction is DOWN, elevator checks lights in floors below.
+	else if (dir == 1){
+		for (int below = reached_floor-1; below > -1; below--)
 		{
-			for (int floor_below = current_floor -1; floor_below >= 0; floor_below--)
+			for (int button = 0; button < N_BUTTONS ; button++)
 			{
-				if (get_order(floor_below, button))
+				if (get_order(below, button))
 				{
 					return 1;
 				}
