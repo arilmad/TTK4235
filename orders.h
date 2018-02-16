@@ -1,6 +1,7 @@
 #ifndef __ORDERS_H__
 #define __ORDERS_H__
 
+#include <stdio.h>
 #include "elev.h"
 
 /*
@@ -12,10 +13,12 @@ Gets the order from a given floor and button.
 int get_order(int floor, int button);
 
 
+int get_order_from_floor(int floor);
+
 /*
 Polls input channels to look for orders.
 */
-void recieve_orders(void);
+void receive_orders(void);
 
 
 /*
@@ -30,6 +33,11 @@ Clear order on given floor
 @param	Floor to clear orders from.
 */
 void clear_order(int floor);
+
+/*
+
+*/
+void clear_all_orders(void);
 
 
 /*

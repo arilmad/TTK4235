@@ -81,7 +81,7 @@ void elev_set_door_open_lamp(int value) {
 
 int elev_get_door_open_lamp(void){
 
-    io_read_bit(LIGHT_DOOR_OPEN);
+    return io_read_bit(LIGHT_DOOR_OPEN);
 }
 
 int elev_get_obstruction_signal(void) {
@@ -153,4 +153,8 @@ void elev_set_button_lamp(elev_button_type_t button, int floor, int value) {
         io_set_bit(lamp_channel_matrix[floor][button]);
     else
         io_clear_bit(lamp_channel_matrix[floor][button]);
+}
+
+int elev_get_button_lamp(int button, int floor){
+    return lamp_channel_matrix[floor][button];
 }

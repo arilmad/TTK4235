@@ -16,7 +16,7 @@ int prioritized_floor(int current_floor, int dir);
 Looks for orders ahead of the elevator
 @param current_floor 	Current floor
 @param dir				Elevator direction
-@return					Non-zero if order in elevators direction, 0 otherwise
+@return					Non-zero if order in elevators direction, -1 otherwise
 */
 int orders_ahead(int current_floor, int dir);
 

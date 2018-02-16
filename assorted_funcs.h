@@ -1,6 +1,7 @@
 #ifndef __ASSORTED_FUNCS_H__
 #define __ASSORTED_FUNCS_H__
 
+#include <stdlib.h>
 #include <time.h>
 #include "elev.h"
 #include "io.h"

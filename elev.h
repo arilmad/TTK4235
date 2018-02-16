@@ -121,5 +121,7 @@ int elev_get_button_signal(elev_button_type_t button, int floor);
 */
 void elev_set_button_lamp(elev_button_type_t button, int floor, int value);
 
+int elev_get_button_lamp(int button, int floor);
+
 
 #endif // #ifndef __INCLUDE_DRIVER_H__

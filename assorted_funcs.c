@@ -28,7 +28,6 @@ int initialize_lift(void)
 
 void move_to_floor(int current_floor, int desired_floor)
 {
-	printf("MOVETOFLOOR ACTIVATED\n");
 	if (current_floor < desired_floor)
 	{
 		elev_set_motor_direction(DIRN_UP);
