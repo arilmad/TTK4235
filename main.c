@@ -27,9 +27,14 @@ int main(){
 
 	current_dir = 0; // 0 = Up, 1 = Down
 
+
+	int previous_dir = 0;
+
 	//
 	while (1) // Standby
 	{
+		printf("I stdyloop\n");
+		//receive_orders itererer gjennom alle knapper og setter lamper
 		receive_orders();
 		requested_floor = pending_orders() + 1;
 
@@ -58,20 +63,16 @@ int main(){
 					stop_button = 0;
 					break;
 				}
-				else if ((current_state == N_FLOORS - 1) && (current_dir == 1))
-				{
-					printf("First if\n");
-					stop = 1;
-				}
+
 				else if ((current_state == 0) && (current_dir == -1))
 				{
-					printf("Second if\n");
+					//printf("Second if\n");
 					stop = 1;
 				}
 				else if ((current_state != current_floor) && (current_state != -1))
 				{
-					printf("%d\n", current_state);
-					printf("Third if\n");
+					//printf("%d\n", current_state);
+					//printf("Third if\n");
 					stop = prioritized_floor(current_state, current_dir);
 				}
 
@@ -81,8 +82,58 @@ int main(){
 					current_floor = current_state;
 					clear_order(current_floor);
 					stop = 0;
-					//set_door_open_for_n_seconds(3);
-					break;
+					while(1)
+					{
+						set_door_open_for_n_seconds(3);
+
+						if(get_order_from_floor(current_floor))
+						{
+							clear_order(current_floor);
+							
+							continue;
+						}
+						break;
+					}
+
+					if(!(pending_orders()))
+					{
+						printf("pending_orders finner ingen pending orders\n");
+
+						break;
+					}
+					if(pending_orders())
+					{
+						printf("pending_orders finner pending orders\n");
+					}
+
+					requested_floor = orders_ahead(current_floor, current_dir);
+
+					if(requested_floor)
+
+					{
+						printf("Move to floor i samme dir\n");
+						if (current_dir == 0) {
+							elev_set_motor_direction(DIRN_UP);
+						}
+						else if (current_dir == 1)
+						{
+							elev_set_motor_direction(DIRN_DOWN);
+						}
+					}
+
+					else
+					{
+						printf("Move to floor i motsatt dir\n");
+						if (current_dir == 1) {
+							elev_set_motor_direction(DIRN_UP);
+						}
+						else if (current_dir == 0)
+						{
+							elev_set_motor_direction(DIRN_DOWN);
+						}
+
+					}
+
 				}
 			}
 		}

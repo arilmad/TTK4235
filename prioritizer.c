@@ -8,17 +8,7 @@ int prioritized_floor(int current_floor, int dir)
 	//0 if it has an active order from reached floor in UP dir
 	//1 if there is and active order from reached floor in DOWN dir
 	//-1 elsewise
-	int command = get_order(current_floor, 2);
-	int dir_button = get_order(current_floor, dir);
-	int orders = orders_ahead(current_floor, dir);
-	printf("Direction: ");
-	printf("%d\n", dir);
-	printf("Command button: ");
-	printf("%d\n", command);
-	printf("Dir button: ");
-	printf("%d\n", dir_button);
-	printf("Orders ahead: ");
-	printf("%d\n", orders);
+
 
 	if(current_floor == 3 || current_floor == 0 || get_order(current_floor, 2))
 	{
@@ -41,6 +31,9 @@ int prioritized_floor(int current_floor, int dir)
 
 int orders_ahead(int current_floor, int dir){
 
+
+	//Returns nearest floor to which the elevator is ordered. -1 elsewise
+
 	//If elevator is either at top or bottom floor, it will request to stop
 
 	//If direction is UP, elevator checks lights in floors above. 
@@ -52,7 +45,7 @@ int orders_ahead(int current_floor, int dir){
 			{
 				if (get_order(above, button))
 				{
-					return 1;
+					return above;
 				}
 			}
 		}
@@ -66,7 +59,7 @@ int orders_ahead(int current_floor, int dir){
 			{
 				if (get_order(below, button))
 				{
-					return 1;
+					return below;
 				}
 			}
 		}

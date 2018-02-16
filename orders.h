@@ -14,6 +14,8 @@ Gets the order from a given floor and button.
 int get_order(int floor, int button);
 
 
+int get_order_from_floor(int floor);
+
 /*
 Polls input channels to look for orders.
 */

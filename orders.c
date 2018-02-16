@@ -1,16 +1,26 @@
 #include "orders.h"
 
-static int orders[N_FLOORS][N_BUTTONS] = 
+static int ORDERS[N_FLOORS][N_BUTTONS] = 
 {
     { 0, 0, 0 },
     { 0, 0, 0 },
     { 0, 0, 0 },
     { 0, 0, 0 },
 };
- 
+int get_order_from_floor(int floor)
+{
+	for (int button = 0; button < N_BUTTONS; button++)
+	{
+		if(get_order(floor, button))
+		{
+			return 1;
+		}
+	}
+	return 0;
+}
 int get_order(int floor, int button)
 {
-	return orders[floor][button];
+	return ORDERS[floor][button];
 }
 
 void receive_orders(void)
@@ -29,9 +39,10 @@ void receive_orders(void)
 			}
 			else
 			{
-				orders[floor][button] = elev_get_button_signal(button, floor);
-				if(orders[floor][button])
+				
+				if(elev_get_button_signal(button, floor))
 				{
+					ORDERS[floor][button] = 1;
 					elev_set_button_lamp(button, floor, 1);
 				}
 			}
@@ -45,7 +56,7 @@ int pending_orders(void)
 	{
 		for (int button = 0; button < N_BUTTONS; button++)
 		{
-			if (orders[floor][button] == 1)
+			if (elev_get_button_lamp(button, floor))
 			{
 				return floor;
 			}
@@ -58,7 +69,9 @@ void clear_order(int floor)
 {
 	for (int button = 0; button < N_BUTTONS; button++)
 	{
-		//printf("clear_order kjører \n");
+		printf("clear_order kjører \n");
+		printf("floor: ");
+		printf("%d\n", floor);
 		if ((floor == (N_FLOORS - 1)) && (button == 0))
 		{
 			continue;
@@ -69,8 +82,8 @@ void clear_order(int floor)
 		}
 		else
 		{
-			orders[floor][button] = 0;
-			elev_set_button_lamp(button, floor, orders[floor][button]);
+			ORDERS[floor][button] = 0;
+			elev_set_button_lamp(button, floor, 0);
 		}
 	}
 }
