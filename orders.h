@@ -2,7 +2,6 @@
 #define __ORDERS_H__
 
 #include "elev.h"
-#include "orders.h"
 
 /*
 Gets the order from a given floor and button.
@@ -20,6 +19,13 @@ void recieve_orders(void);
 
 
 /*
+Looks for pending orders
+@return	Num of firs pending order it hits, 0 otherwise.
+*/
+int pending_orders(void);
+
+
+/*
 Clear order on given floor
 @param	Floor to clear orders from.
 */
@@ -27,9 +33,8 @@ void clear_order(int floor);
 
 
 /*
-Looks for pending orders
-@return	Non-zero if there are any pending orders, 0 otherwise.
+Clears all orders
 */
-int pending_orders(void);
+void clear_all_orders(void);
 
 #endif	//ifndef __ORDERS_H__
