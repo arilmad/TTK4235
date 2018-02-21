@@ -36,20 +36,32 @@ int main(){
 	//
 	while (1) // Standby
 	{
-		printf("I stdbyloop\n");
+		
 		//receive_orders itererer gjennom alle knapper og setter lamper
 		receive_orders();
 
 		//requested_floor returnerer første etasje FRA BUNNEN som har aktiv bestilling. Returnerer -1 hvis ingen bestilling.
 		requested_floor = pending_orders() + 1;
-		printf("requested_floor: " );
-		printf("%d", requested_floor);
-		printf("\n");
+		
 
 		if (requested_floor != 0)
 		{
 			requested_floor -= 1;
 			move_to_floor(current_floor, requested_floor);
+			
+			if(elev_get_floor_sensor_signal() == -1)
+			{
+				if(requested_floor == current_floor)
+				{
+					if(current_dir == 1){
+						elev_set_motor_direction(DIRN_UP);
+					}
+					else
+					{
+						elev_set_motor_direction(DIRN_DOWN);
+					}
+				}
+			}
 			while (1) //Moving
 			{
 				receive_orders();
@@ -62,27 +74,32 @@ int main(){
 					elev_set_motor_direction(DIRN_STOP);
 					elev_set_stop_lamp(1);
 					clear_all_orders();
-					if (elev_get_floor_sensor_signal() != -1)
-					{
-						elev_set_door_open_lamp(1);
-					}
+
 					while (elev_get_stop_signal()){continue;}
-					elev_set_door_open_lamp(0);
 					elev_set_stop_lamp(0);
 					stop_button = 0;
+
+					if (elev_get_floor_sensor_signal() != -1)
+					{
+						clock_t reference_time = clock();
+						elev_set_door_open_lamp(1);
+						while(!(timer(3, reference_time))){continue;}
+						elev_set_door_open_lamp(0);
+					}
 					break;
 				}
 
-				else if ((current_state == 0) && (current_dir == -1))
-				{
-					//printf("Second if\n");
-					stop = 1;
-				}
 				else if ((current_state != current_floor) && (current_state != -1))
 				{
-					//printf("%d\n", current_state);
-					//printf("Third if\n");
+					elev_set_floor_indicator(current_state);
 					stop = prioritized_floor(current_state, current_dir);
+				}
+
+				else if ((current_state == current_floor)&& (get_order_from_floor(current_floor)))
+				{
+					stop = 1;
+					while(button_held_down_in_floor(current_floor)){continue;}
+
 				}
 
 				if (stop)
@@ -94,7 +111,8 @@ int main(){
 					printf("Clearing all orders in floor ");
 					printf("%d", current_floor );
 					printf("\n");
-
+					printf("%d", get_order_from_floor(current_floor));
+					printf("\n");
 					stop = 0;
 
 
@@ -104,6 +122,7 @@ int main(){
 
 						if(get_order_from_floor(current_floor))
 						{
+
 							clear_order(current_floor);
 							
 							continue;

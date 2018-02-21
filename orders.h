@@ -14,6 +14,8 @@ int get_order(int floor, int button);
 
 
 int get_order_from_floor(int floor);
+int button_held_down_in_floor(int floor);
+
 
 /*
 Polls input channels to look for orders.

@@ -22,7 +22,7 @@ int prioritized_floor(int current_floor, int dir)
 	//else{printf("FLOOR_ORDER FEILER");}
 
 
-	if (get_order(current_floor, !dir) && (!(orders_ahead(current_floor, dir))))
+	if (get_order(current_floor, !dir) && (!(orders_ahead(current_floor, dir) + 1)))
 	{
 		return 1;
 	}
