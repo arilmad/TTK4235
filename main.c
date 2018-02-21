@@ -14,9 +14,10 @@ int main(){
 	int current_floor;
 	int current_dir;
 	int current_state;
+	int prev_floor = -1;
 
 	int requested_floor;
-
+	int prev_dir = -1;
 	int stop = 0;
 	int stop_button = 0;
 
@@ -42,9 +43,9 @@ int main(){
 
 		//requested_floor returnerer første etasje FRA BUNNEN som har aktiv bestilling. Returnerer -1 hvis ingen bestilling.
 		requested_floor = pending_orders() + 1;
-		
+		stop_button = elev_get_stop_signal();
 
-		if (requested_floor != 0)
+		if (requested_floor != 0 || stop_button)
 		{
 			requested_floor -= 1;
 			move_to_floor(current_floor, requested_floor);
@@ -53,14 +54,16 @@ int main(){
 			{
 				if(requested_floor == current_floor)
 				{
-					if(current_dir == 1){
+					if(current_dir == 1)
+					{
 						elev_set_motor_direction(DIRN_UP);
 					}
-					else
+					else if(current_dir == 0)
 					{
 						elev_set_motor_direction(DIRN_DOWN);
 					}
 				}
+				//current_dir = elev_get_motor_direction();
 			}
 			while (1) //Moving
 			{
@@ -81,21 +84,24 @@ int main(){
 
 					if (elev_get_floor_sensor_signal() != -1)
 					{
-						clock_t reference_time = clock();
-						elev_set_door_open_lamp(1);
-						while(!(timer(3, reference_time))){continue;}
-						elev_set_door_open_lamp(0);
+						//clock_t reference_time = clock();
+						//elev_set_door_open_lamp(1);
+						//while(!(timer(3, reference_time))){continue;}
+						set_door_open_for_n_seconds(3);
+						//elev_set_door_open_lamp(0);
 					}
+					//prev_dir = current_dir;
 					break;
 				}
 
 				else if ((current_state != current_floor) && (current_state != -1))
 				{
+					prev_floor = current_state;
 					elev_set_floor_indicator(current_state);
 					stop = prioritized_floor(current_state, current_dir);
 				}
 
-				else if ((current_state == current_floor)&& (get_order_from_floor(current_floor)))
+				else if ((current_state == current_floor) && (get_order_from_floor(current_floor)))
 				{
 					stop = 1;
 					while(button_held_down_in_floor(current_floor)){continue;}
@@ -105,6 +111,7 @@ int main(){
 				if (stop)
 				{
 					elev_set_motor_direction(DIRN_STOP);
+					prev_floor = current_state;
 					current_floor = current_state;
 
 					clear_order(current_floor);
