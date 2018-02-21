@@ -64,5 +64,5 @@ int orders_ahead(int current_floor, int dir){
 			}
 		}
 	}
-	return 0;
+	return -1;
 }

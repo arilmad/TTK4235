@@ -56,12 +56,18 @@ int pending_orders(void)
 	{
 		for (int button = 0; button < N_BUTTONS; button++)
 		{
-			if (elev_get_button_lamp(button, floor))
+			if (!((floor == (N_FLOORS - 1)) && (button == 0))&&(!(((floor == 0) && (button == 1)))))
 			{
-				return floor;
-			}
+
+				if(ORDERS[floor][button])
+				{
+					printf("pending_orders FANT pending orders!");
+					return floor;
+				}
+			} 
 		}
 	}
+	printf("pending_orders fant INGEN pending orders!");
 	return -1;
 }
 

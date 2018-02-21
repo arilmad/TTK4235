@@ -20,27 +20,36 @@ int main(){
 	int stop = 0;
 	int stop_button = 0;
 
+
+	//current_floor er 0-initialisert
 	current_floor = initialize_lift();
 	printf("Current floor: ");
 	printf("%d\n", current_floor);
-	elev_set_floor_indicator(current_floor);
 
+
+	elev_set_floor_indicator(current_floor);
 	current_dir = 0; // 0 = Up, 1 = Down
 
+	set_door_open_for_n_seconds(3);
 
-	int previous_dir = 0;
-
+	
 	//
 	while (1) // Standby
 	{
-		printf("I stdyloop\n");
+		printf("I stdbyloop\n");
 		//receive_orders itererer gjennom alle knapper og setter lamper
 		receive_orders();
-		requested_floor = pending_orders() + 1;
 
-		if (requested_floor)
+		//requested_floor returnerer første etasje FRA BUNNEN som har aktiv bestilling. Returnerer -1 hvis ingen bestilling.
+		requested_floor = pending_orders() + 1;
+		printf("requested_floor: " );
+		printf("%d", requested_floor);
+		printf("\n");
+
+		if (requested_floor != 0)
 		{
-			move_to_floor(current_floor, requested_floor - 1);
+			requested_floor -= 1;
+			move_to_floor(current_floor, requested_floor);
 			while (1) //Moving
 			{
 				receive_orders();
@@ -80,8 +89,15 @@ int main(){
 				{
 					elev_set_motor_direction(DIRN_STOP);
 					current_floor = current_state;
+
 					clear_order(current_floor);
+					printf("Clearing all orders in floor ");
+					printf("%d", current_floor );
+					printf("\n");
+
 					stop = 0;
+
+
 					while(1)
 					{
 						set_door_open_for_n_seconds(3);
@@ -95,19 +111,19 @@ int main(){
 						break;
 					}
 
-					if(!(pending_orders()))
+					if(!(pending_orders()+1))
 					{
 						printf("pending_orders finner ingen pending orders\n");
 
 						break;
 					}
-					if(pending_orders())
+					if(pending_orders()+1)
 					{
 						printf("pending_orders finner pending orders\n");
 					}
 
-					requested_floor = orders_ahead(current_floor, current_dir);
-
+					requested_floor = orders_ahead(current_floor, current_dir)+1;
+					
 					if(requested_floor)
 
 					{
