@@ -15,6 +15,8 @@ int main(){
 	int requested_floor;
 	int is_door_open;
 	int new_order;
+	int current_floor;
+
 	
 
 
@@ -25,8 +27,18 @@ int main(){
 		//mottar ordre og setter lamper. Returnerer 1 hvis ny ordre plukkes opp
 		new_order = receive_orders();
 		stop_button = elev_get_stop_signal();	
-		requested_floor = pending_orders() + 1;
+		
 		is_door_open = elev_get_door_open_lamp;
+		current_floor = elev_get_floor_sensor_signal;
+
+		if(current_floor != -1){
+
+			fsm_update_state_machine(current_floor);
+		}
+
+		else if(stop_button){
+			
+		}
 
 
 
