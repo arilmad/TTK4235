@@ -10,7 +10,7 @@ int prioritized_floor(int current_floor, int dir)
 	//-1 elsewise
 
 
-	if(current_floor == 3 || current_floor == 0 || get_order(current_floor, 2))
+	if (get_order(current_floor, 2))
 	{
 		return 1;
 	}

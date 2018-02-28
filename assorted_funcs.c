@@ -21,19 +21,19 @@ int initialize_lift(void)
 	}
 
 	elev_set_motor_direction(DIRN_STOP);
-
+	elev_set_floor_indicator(floor);
 	return floor;
 
 }
 
-void move_to_floor(int current_floor, int desired_floor)
+void move_to_floor(double current_floor, int desired_floor)
 {
-	if (current_floor < desired_floor)
+	if (current_floor < (double)desired_floor)
 	{
 		elev_set_motor_direction(DIRN_UP);
 	}
 
-	else if (current_floor > desired_floor)
+	else if (current_floor > (double)desired_floor)
 	{
 		elev_set_motor_direction(DIRN_DOWN);
 	}
@@ -49,7 +49,7 @@ int timer(int count_s, clock_t reference)
 {
 	clock_t new_time = clock();
 
-	if (((new_time - reference)/CLOCKS_PER_SEC) > count_s)
+	if (((new_time - reference)/CLOCKS_PER_SEC) >= count_s)
 	{
 		return 1;
 	}

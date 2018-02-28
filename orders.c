@@ -23,7 +23,7 @@ int get_order(int floor, int button)
 	return ORDERS[floor][button];
 }
 
-int receive_orders(void)
+void receive_orders(void)
 {
 	for (int floor = 0; floor < N_FLOORS; floor++)
 	{
@@ -44,12 +44,10 @@ int receive_orders(void)
 				{
 					ORDERS[floor][button] = 1;
 					elev_set_button_lamp(button, floor, 1);
-					return 1;
 				}
 			}
 		}
 	}
-	return 0;
 }
 
 int button_held_down_in_floor(int floor)
@@ -105,9 +103,6 @@ void clear_order(int floor)
 {
 	for (int button = 0; button < N_BUTTONS; button++)
 	{
-		printf("clear_order kjører \n");
-		printf("floor: ");
-		printf("%d\n", floor);
 		if ((floor == (N_FLOORS - 1)) && (button == 0))
 		{
 			continue;
@@ -128,7 +123,6 @@ void clear_all_orders(void)
 {
 	for (int floor = 0; floor < N_FLOORS; floor++)
 	{
-		printf("clear_all_orders kjører \n");
 		clear_order(floor);
 	}
 }
