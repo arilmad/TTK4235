@@ -20,7 +20,7 @@ Starte the motor.
 @param current_floor	Elevators current floor
 @param desired_floor	The requested floor to go to
 */
-void move_to_floor(int current_floor, int desired_floor);
+void move_to_floor(double current_floor, int desired_floor);
 
 
 /*
@@ -28,10 +28,5 @@ void move_to_floor(int current_floor, int desired_floor);
 */
 int timer(int count_s, clock_t reference);
 
-
-/*
-
-*/
-void set_door_open_for_n_seconds(int n_seconds);
 
 #endif	//#ifndef __ASSORTED_FUNCS_H__
