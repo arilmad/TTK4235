@@ -8,6 +8,7 @@ int prev_floor;
 int prev_dir;
 
 //used to identify elevator's position when stopped in between floors.
+//HUSK Å ENDRA NAVN FØR FAT!!!!!!!!!!
 double trouble;
 
 
@@ -16,7 +17,7 @@ double trouble;
 void fsm (int stop_button, int current_floor, int door_open, int current_dir) {
 
 
-	//fsm communicates with 
+	
 	receive_orders();
 
 
@@ -24,35 +25,41 @@ void fsm (int stop_button, int current_floor, int door_open, int current_dir) {
 	double floor = (double)current_floor;
 
 
+
 	if(stop_button){
 		current_state = STOP_BUTTON;
 	}
 
 
+
 	switch(current_state) {
+
 		case INIT:
+
 			initialize_lift();
 			current_state = STANDBY;
 			printf("Entering standby from init\n");
 			break;
 
-		case STANDBY:
-			requested_floor = pending_orders();
 
+
+		case STANDBY:
+
+			requested_floor = pending_orders();
 
 			if (current_floor == -1){
 
 				if(prev_dir == 0){
-					printf("Prev dir: UP\n");
-					
 					trouble = prev_floor + 0.5;
 				}
+
 				else{
-					printf("Prev dir: DOWN\n");
 					trouble = prev_floor - 0.5;
 				}
+
 				floor = trouble;
 			}
+
 			else if (requested_floor == current_floor){
 				current_state = DOOR_OPEN;
 				printf("Entering door_open from standby\n");
@@ -60,12 +67,15 @@ void fsm (int stop_button, int current_floor, int door_open, int current_dir) {
 				elev_set_door_open_lamp(1);
 				break;
 			}
+
 			if (requested_floor != -1){
 				current_state = MOVING;
 				printf("Entering moving from standby\n");
 				move_to_floor(floor, requested_floor);
 			}
+
 			break;
+
 
 
 		case STOP_BUTTON:
@@ -87,6 +97,9 @@ void fsm (int stop_button, int current_floor, int door_open, int current_dir) {
 			current_state = STANDBY;
 			printf("Entering standby from stop_button\n");
 			break;
+
+
+
 		case MOVING:
 			if(current_floor == -1){
 				break;
@@ -106,6 +119,8 @@ void fsm (int stop_button, int current_floor, int door_open, int current_dir) {
 				printf("Entering door_open from moving\n");
 			}
 			break;
+
+
 
 		case DOOR_OPEN:
 			if (timer(timeout, reference)){

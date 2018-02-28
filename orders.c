@@ -50,33 +50,6 @@ void receive_orders(void)
 	}
 }
 
-int button_held_down_in_floor(int floor)
-{
-	for (int button = 0; button < N_BUTTONS; button++)
-	{
-		if ((floor == (N_FLOORS - 1)) && (button == 0))
-		{
-			continue;
-		}
-		else if ((floor == 0) && (button == 1))
-		{
-			continue;
-		}
-		else
-		{
-			
-			if(elev_get_button_signal(button, floor))
-			{
-				return 1;
-			}
-		}
-	}
-
-	return 0;
-
-}
-
-
 
 int pending_orders(void)
 {
