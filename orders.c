@@ -23,7 +23,7 @@ int get_order(int floor, int button)
 	return ORDERS[floor][button];
 }
 
-void receive_orders(void)
+int receive_orders(void)
 {
 	for (int floor = 0; floor < N_FLOORS; floor++)
 	{
@@ -44,10 +44,12 @@ void receive_orders(void)
 				{
 					ORDERS[floor][button] = 1;
 					elev_set_button_lamp(button, floor, 1);
+					return 1;
 				}
 			}
 		}
 	}
+	return 0;
 }
 
 int button_held_down_in_floor(int floor)

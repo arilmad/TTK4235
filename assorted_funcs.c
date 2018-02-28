@@ -42,7 +42,6 @@ void move_to_floor(int current_floor, int desired_floor)
 	{
 		elev_set_motor_direction(DIRN_STOP);
 	}
-	
 
 }
 

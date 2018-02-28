@@ -20,7 +20,7 @@ int button_held_down_in_floor(int floor);
 /*
 Polls input channels to look for orders.
 */
-void receive_orders(void);
+int receive_orders(void);
 
 
 /*
