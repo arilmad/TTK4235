@@ -11,6 +11,9 @@
 void initialize_lift(void){
 	io_init();
 	elev_init();
+	fsm_init();
+	
+	set_door_open_for_n_seconds(3);
 }
 
 

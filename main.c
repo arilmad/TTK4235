@@ -9,8 +9,31 @@
 int main(){
 
 	
-	initialize_lift();
+	int current_floor = initialize_lift();
+	int stop_button;
 
+	
+
+
+
+	while(1){
+
+
+		//mottar ordre og setter lamper
+		receive_orders();
+		stop_button = elev_get_stop_signal();
+		
+
+
+
+
+
+	}
+
+
+
+
+/*
 	//Makes sure the lift is at defined state and sets floor indicator lamp.
 	int current_floor = enter_defined_state();
 	elev_set_floor_indicator(current_floor);
