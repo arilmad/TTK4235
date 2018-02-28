@@ -9,11 +9,31 @@
 
 
 void initialize_lift(void){
-	io_init();
+
 	elev_init();
 	fsm_init();
-	
+
+	int floor = elev_get_floor_sensor_signal();
+
+	if (floor != -1)
+	{
+		return floor;
+	}
+
+	elev_set_motor_direction(DIRN_UP); //Assumes we are below 4. floor.
+
+	while(floor == -1)
+	{
+		floor = elev_get_floor_sensor_signal();
+	}
+
+	elev_set_motor_direction(DIRN_STOP);
+	elev_set_floor_indicator_lamp(floor);
 	set_door_open_for_n_seconds(3);
+
+	
+	
+	
 }
 
 

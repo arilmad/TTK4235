@@ -9,9 +9,12 @@
 int main(){
 
 	
-	int current_floor = initialize_lift();
-	int stop_button;
+	initialize_lift();
 
+	int stop_button;
+	int requested_floor;
+	int is_door_open;
+	int new_order;
 	
 
 
@@ -19,10 +22,11 @@ int main(){
 	while(1){
 
 
-		//mottar ordre og setter lamper
-		receive_orders();
-		stop_button = elev_get_stop_signal();
-		
+		//mottar ordre og setter lamper. Returnerer 1 hvis ny ordre plukkes opp
+		new_order = receive_orders();
+		stop_button = elev_get_stop_signal();	
+		requested_floor = pending_orders() + 1;
+		is_door_open = elev_get_door_open_lamp;
 
 
 
