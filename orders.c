@@ -23,6 +23,7 @@ int get_order(int floor, int button)
 	return ORDERS[floor][button];
 }
 
+
 void receive_orders(void)
 {
 	for (int floor = 0; floor < N_FLOORS; floor++)

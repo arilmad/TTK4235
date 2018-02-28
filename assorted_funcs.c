@@ -1,10 +1,11 @@
 #include "assorted_funcs.h"
 
 
-int initialize_lift(void)
-{
-	
+
+void initialize_lift(void){
+
 	elev_init();
+	fsm_init();
 
 	int floor = elev_get_floor_sensor_signal();
 
@@ -21,10 +22,14 @@ int initialize_lift(void)
 	}
 
 	elev_set_motor_direction(DIRN_STOP);
+	elev_set_floor_indicator_lamp(floor);
+	set_door_open_for_n_seconds(3);
 
-	return floor;
-
+	
+	
+	
 }
+
 
 void move_to_floor(int current_floor, int desired_floor)
 {
