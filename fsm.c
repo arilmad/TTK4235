@@ -44,7 +44,7 @@ void fsm (int stop_button, int current_floor, int door_open, int current_dir) {
 			//Elevator calculates it's position if stop button is pressed in between floors.
 			if (current_floor == -1){
 
-				if(prev_dir == 0){
+				if(prev_dir == 1){
 					in_between_floors = prev_floor + 0.5;
 				}
 				else{
@@ -149,15 +149,15 @@ void fsm (int stop_button, int current_floor, int door_open, int current_dir) {
 
 
 			//If orders_ahead returns anything above -1, the elevator has interest in continuing in current dir.
-			if (orders_ahead(current_floor, current_dir) != -1){
+			
 
-				if (orders_ahead(current_floor, current_dir) != -1){
-					elev_set_motor_direction(current_dir);
-				}
-				else {
-					elev_set_motor_direction(-current_dir);
-				}
+			if (orders_ahead(current_floor, current_dir) != -1){
+				elev_set_motor_direction(current_dir);
 			}
+			else {
+				elev_set_motor_direction(-current_dir);
+			}
+			
 
 			current_state = MOVING;
 			printf("Entering moving from door_open\n");
