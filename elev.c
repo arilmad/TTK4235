@@ -66,11 +66,14 @@ void elev_set_motor_direction(elev_motor_direction_t dirn) {
     }
 }
 
+//returns 1 if direction is upwards, -1 if direction is downwards
 int elev_get_motor_direction(void){
 
-    return(io_read_analog(MOTORDIR));
+	if (io_read_analog(MOTORDIR) == 0){
+		return 1;
+	}
+	return -1;
 }
-
 
 void elev_set_door_open_lamp(int value) {
     if (value)
@@ -157,4 +160,48 @@ void elev_set_button_lamp(elev_button_type_t button, int floor, int value) {
 
 int elev_get_button_lamp(int button, int floor){
     return lamp_channel_matrix[floor][button];
+}
+
+int initialize_lift(void)
+{
+
+	elev_init();
+
+	int floor = elev_get_floor_sensor_signal();
+
+	if (floor != -1)
+	{
+		return floor;
+	}
+
+	elev_set_motor_direction(DIRN_UP); //Assumes we are below 4. floor.
+
+	while (floor == -1)
+	{
+		floor = elev_get_floor_sensor_signal();
+	}
+
+	elev_set_motor_direction(DIRN_STOP);
+	elev_set_floor_indicator(floor);
+	return floor;
+
+}
+
+void move_to_floor(double current_floor, int desired_floor)
+{
+	if (current_floor < (double)desired_floor)
+	{
+		elev_set_motor_direction(DIRN_UP);
+	}
+
+	else if (current_floor >(double)desired_floor)
+	{
+		elev_set_motor_direction(DIRN_DOWN);
+	}
+
+	else
+	{
+		elev_set_motor_direction(DIRN_STOP);
+	}
+
 }

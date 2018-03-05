@@ -46,4 +46,21 @@ Clears all orders
 */
 void clear_all_orders(void);
 
+/*
+Initialization of the elevator.
+Elevator moves upwards and stops at nearest floor.
+@return Current floor
+*/
+int initialize_lift(void);
+
+
+/*
+Starte the motor.
+@param current_floor	Elevators current floor
+@param desired_floor	The requested floor to go to
+*/
+void move_to_floor(double current_floor, int desired_floor);
+
+
+
 #endif	//ifndef __ORDERS_H__

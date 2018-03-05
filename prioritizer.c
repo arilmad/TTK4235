@@ -2,12 +2,15 @@
 
 int prioritized_floor(int current_floor, int dir)
 {
-	//Buttons and motor operate with different dir indexing. Scaling dir from motor to buttons for further use
+	
+	//Scaling to make dir respond to BUTTON_CALL_UP and BUTTON_CALL_DOWN
+	if (dir == 1){
+		dir = 0;
+	}
+	else{
+		dir = 1;
+	}
 
-	//The function suggested_stop returns 2 if the lift has an active order made inside itself,
-	//0 if it has an active order from reached floor in UP dir
-	//1 if there is and active order from reached floor in DOWN dir
-	//-1 elsewise
 
 
 	if (get_order(current_floor, 2))
@@ -34,10 +37,8 @@ int orders_ahead(int current_floor, int dir){
 
 	//Returns nearest floor to which the elevator is ordered. -1 elsewise
 
-	//If elevator is either at top or bottom floor, it will request to stop
-
 	//If direction is UP, elevator checks lights in floors above. 
-	if (dir == 0)
+	if (dir == 1)
 	{
 		for (int above = current_floor+1; above < N_FLOORS; above++)
 		{
@@ -52,7 +53,7 @@ int orders_ahead(int current_floor, int dir){
 	}
 
 	////If direction is DOWN, elevator checks lights in floors below.
-	else if (dir == 1){
+	else if (dir == -1){
 		for (int below = current_floor-1; below > -1; below--)
 		{
 			for (int button = 0; button < N_BUTTONS ; button++)
