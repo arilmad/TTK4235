@@ -124,4 +124,21 @@ void elev_set_button_lamp(elev_button_type_t button, int floor, int value);
 int elev_get_button_lamp(int button, int floor);
 
 
+/*
+Starte the motor.
+@param current_floor	Elevators current floor
+@param desired_floor	The requested floor to go to
+*/
+void move_to_floor(double current_floor, int desired_floor);
+
+
+/*
+Initialization of the elevator.
+Elevator moves upwards and stops at nearest floor.
+@return Current floor
+*/
+int initialize_lift(void);
+
+
+
 #endif // #ifndef __INCLUDE_DRIVER_H__
