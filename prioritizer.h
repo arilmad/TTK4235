@@ -3,7 +3,7 @@
 
 #include "elev.h"
 #include "orders.h"
-/*
+/**
 Decides if the elevator stops at current floor.
 @param current_floor 	Current floor
 @param dir				Elevator direction
@@ -12,7 +12,7 @@ Decides if the elevator stops at current floor.
 int prioritized_floor(int current_floor, int dir);
 
 
-/*
+/**
 Looks for orders ahead of the elevator
 @param current_floor 	Current floor
 @param dir				Elevator direction

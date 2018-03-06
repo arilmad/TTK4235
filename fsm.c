@@ -1,8 +1,9 @@
 #include "fsm.h"
 
+#define DOOR_OPEN_N_SECONDS 3
+
 static state_t current_state = INIT;
 static clock_t set_clock_start_reference;
-int n_seconds = 3;
 int requested_floor;
 int prev_floor;
 int prev_dir;
@@ -129,7 +130,7 @@ void fsm (int stop_button, int current_floor, int door_open, int current_dir) {
 		//Case purpose: Elevator is waiting for the doors to close before eventually deciding whether to 
 		//continue up, down or go to STANDBY depending on active orders.
 
-			if (timer(n_seconds, set_clock_start_reference)){
+			if (timer(DOOR_OPEN_N_SECONDS, set_clock_start_reference)){
 				elev_set_door_open_lamp(0);
 			}
 
