@@ -27,6 +27,7 @@ static const int button_channel_matrix[N_FLOORS][N_BUTTONS] = {
     {BUTTON_UP4, BUTTON_DOWN4, BUTTON_COMMAND4},
 };
 
+
 int elev_init(void) {
     int i;
 
@@ -59,10 +60,10 @@ void elev_set_motor_direction(elev_motor_direction_t dirn) {
         io_write_analog(MOTOR, 0);
     } else if (dirn > 0) {
         io_clear_bit(MOTORDIR);
-        io_write_analog(MOTOR, 2800);
+        io_write_analog(MOTOR, 3000);
     } else if (dirn < 0) {
         io_set_bit(MOTORDIR);
-        io_write_analog(MOTOR, 2800);
+        io_write_analog(MOTOR, 3000);
     }
 }
 
@@ -183,7 +184,7 @@ void elev_move_to_floor(double current_floor, int desired_floor){
 }
 
 
-void elev_initialize_lift(void){
+void elev_enter_defined_state(void){
 
 	elev_init();
 
@@ -191,7 +192,7 @@ void elev_initialize_lift(void){
 
 	if (floor != -1)
 	{
-		return floor;
+		return;
 	}
 
 	elev_set_motor_direction(DIRN_UP); //Assumes we are below 4. floor.
@@ -202,6 +203,7 @@ void elev_initialize_lift(void){
 	}
 
 	elev_set_motor_direction(DIRN_STOP);
-	elev_set_floor_indicator_lamp(floor);
+
+	elev_set_floor_indicator(floor);
 
 }

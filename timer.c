@@ -1,5 +1,4 @@
-#include "assorted_funcs.h"
-
+#include "timer.h"
 
 
 int timer(int count_s, clock_t reference)

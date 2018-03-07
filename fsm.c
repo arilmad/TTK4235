@@ -28,7 +28,7 @@ void fsm (int stop_button, int current_floor, int door_open, int current_dir) {
 		case INIT:
 		//Case purpose: Initialize elevator at program startup
 
-			initialize_lift();
+			elev_enter_defined_state();
 			current_state = STANDBY;
 			printf("Entering standby from init\n");
 			break;
@@ -67,7 +67,7 @@ void fsm (int stop_button, int current_floor, int door_open, int current_dir) {
 			if (requested_floor != -1){
 				current_state = MOVING;
 				printf("Entering moving from standby\n");
-				move_to_floor(current_position, requested_floor);
+				elev_move_to_floor(current_position, requested_floor);
 			}
 
 			break;
@@ -115,7 +115,7 @@ void fsm (int stop_button, int current_floor, int door_open, int current_dir) {
 					elev_set_motor_direction(DIRN_STOP);
 					set_clock_start_reference = clock();
 					elev_set_door_open_lamp(1);
-					clear_order(current_floor);
+					clear_orders_at_floor(current_floor);
 
 					current_state = DOOR_OPEN;
 					printf("Entering door_open from moving\n");
@@ -135,7 +135,7 @@ void fsm (int stop_button, int current_floor, int door_open, int current_dir) {
 			}
 
 			if (door_open){
-				clear_order(current_floor);
+				clear_orders_at_floor(current_floor);
 				break;
 			}
 

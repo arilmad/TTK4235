@@ -129,7 +129,7 @@ Starte the motor.
 @param current_floor	Elevators current floor
 @param desired_floor	The requested floor to go to
 */
-void move_to_floor(double current_floor, int desired_floor);
+void elev_move_to_floor(double current_floor, int desired_floor);
 
 
 /*
@@ -137,7 +137,7 @@ Initialization of the elevator.
 Elevator moves upwards and stops at nearest floor.
 @return Current floor
 */
-int initialize_lift(void);
+void elev_enter_defined_state(void);
 
 
 

@@ -1,4 +1,4 @@
-#include "orders.h"
+#include "order_handling.h"
 
 static int ORDERS[N_FLOORS][N_BUTTONS] = 
 {
@@ -7,6 +7,8 @@ static int ORDERS[N_FLOORS][N_BUTTONS] =
     { 0, 0, 0 },
     { 0, 0, 0 },
 };
+
+
 int get_order_from_floor(int floor)
 {
 	for (int button = 0; button < N_BUTTONS; button++)
@@ -18,6 +20,8 @@ int get_order_from_floor(int floor)
 	}
 	return 0;
 }
+
+
 int get_order(int floor, int button)
 {
 	return ORDERS[floor][button];
@@ -63,7 +67,6 @@ int pending_orders(void)
 
 				if(ORDERS[floor][button])
 				{
-					//printf("pending_orders FANT pending orders!");
 					return floor;
 				}
 			} 
@@ -73,7 +76,8 @@ int pending_orders(void)
 	return -1;
 }
 
-void clear_order(int floor)
+
+void clear_orders_at_floor(int floor)
 {
 	for (int button = 0; button < N_BUTTONS; button++)
 	{
@@ -97,6 +101,40 @@ void clear_all_orders(void)
 {
 	for (int floor = 0; floor < N_FLOORS; floor++)
 	{
-		clear_order(floor);
+		clear_orders_at_floor(floor);
 	}
+}
+
+
+int orders_ahead(int current_floor, int dir){
+
+	//If direction is UP, elevator checks lights in floors above. 
+	if (dir == 1)
+	{
+		for (int above = current_floor+1; above < N_FLOORS; above++)
+		{
+			for (int button = 0; button < N_BUTTONS ; button++)
+			{
+				if (get_order(above, button))
+				{
+					return above;
+				}
+			}
+		}
+	}
+
+	////If direction is DOWN, elevator checks lights in floors below.
+	else if (dir == -1){
+		for (int below = current_floor-1; below > -1; below--)
+		{
+			for (int button = 0; button < N_BUTTONS ; button++)
+			{
+				if (get_order(below, button))
+				{
+					return below;
+				}
+			}
+		}
+	}
+	return -1;
 }
