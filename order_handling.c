@@ -84,7 +84,10 @@ int orders_ahead(int current_floor, int dir){
 	if (dir == 1){
 		for (int above = current_floor+1; above < N_FLOORS; above++){
 			for (int button = 0; button < N_BUTTONS ; button++){
+<<<<<<< HEAD
 
+=======
+>>>>>>> c9ed38fabc5b48a63bc1a7b3806bd24feb76d1ec
 				if (get_order(above, button))
 					return above;
 			}
@@ -95,7 +98,10 @@ int orders_ahead(int current_floor, int dir){
 	else if (dir == -1){
 		for (int below = current_floor-1; below > -1; below--){
 			for (int button = 0; button < N_BUTTONS ; button++){
+<<<<<<< HEAD
 
+=======
+>>>>>>> c9ed38fabc5b48a63bc1a7b3806bd24feb76d1ec
 				if (get_order(below, button))
 					return below;
 			}
