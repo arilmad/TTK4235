@@ -85,12 +85,9 @@ void clear_all_orders(void)
 int orders_ahead(int current_floor, int dir){
 
 	//If direction is UP, elevator checks lights in floors above. 
-	if (dir == 1)
-	{
-		for (int above = current_floor+1; above < N_FLOORS; above++)
-		{
-			for (int button = 0; button < N_BUTTONS ; button++)
-			{
+	if (dir == 1){
+		for (int above = current_floor+1; above < N_FLOORS; above++){
+			for (int button = 0; button < N_BUTTONS ; button++){
 				if (get_order(above, button))
 					return above;
 			}
@@ -99,10 +96,8 @@ int orders_ahead(int current_floor, int dir){
 
 	////If direction is DOWN, elevator checks lights in floors below.
 	else if (dir == -1){
-		for (int below = current_floor-1; below > -1; below--)
-		{
-			for (int button = 0; button < N_BUTTONS ; button++)
-			{
+		for (int below = current_floor-1; below > -1; below--){
+			for (int button = 0; button < N_BUTTONS ; button++){
 				if (get_order(below, button))
 					return below;
 			}
