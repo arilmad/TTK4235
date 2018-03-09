@@ -10,6 +10,8 @@
 #include "timer.h"
 #include "elev.h"
 
+#define DOOR_OPEN_N_SECONDS 3
+
 typedef enum state {
 	INIT = -1,
 	MOVING = 0,

@@ -43,8 +43,7 @@ void receive_orders(void)
 				continue;
 			}
 			else
-			{
-				
+			{			
 				if(elev_get_button_signal(button, floor))
 				{
 					ORDERS[floor][button] = 1;
@@ -56,46 +55,38 @@ void receive_orders(void)
 }
 
 
-int pending_orders(void)
-{
-	for (int floor = 0; floor < N_FLOORS; floor++)
-	{
-		for (int button = 0; button < N_BUTTONS; button++)
-		{
-			if (!((floor == (N_FLOORS - 1)) && (button == 0))&&(!(((floor == 0) && (button == 1)))))
-			{
+int pending_orders(void){
 
-				if(ORDERS[floor][button])
-				{
-					return floor;
-				}
-			} 
+	for (int floor = 0; floor < N_FLOORS; floor++){
+
+		for (int button = 0; button < N_BUTTONS; button++){
+
+			if(ORDERS[floor][button]){
+
+				return floor;
+			}		
 		}
 	}
-	//printf("pending_orders fant INGEN pending orders!");
+
 	return -1;
 }
 
 
-void clear_orders_at_floor(int floor)
-{
-	for (int button = 0; button < N_BUTTONS; button++)
-	{
-		if ((floor == (N_FLOORS - 1)) && (button == 0))
-		{
-			continue;
-		}
-		else if ((floor == 0) && (button == 1))
-		{
-			continue;
-		}
-		else
-		{
+void clear_orders_at_floor(int floor){
+
+	for (int button = 0; button < N_BUTTONS; button++){
+
+		if ((floor == (N_FLOORS - 1)) && (button == 0)){continue;}
+
+		else if ((floor == 0) && (button == 1)){continue;}
+
+		else{
 			ORDERS[floor][button] = 0;
 			elev_set_button_lamp(button, floor, 0);
 		}
 	}
 }
+
 
 void clear_all_orders(void)
 {

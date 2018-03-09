@@ -1,27 +1,28 @@
 #include "prioritizer.h"
 
-int prioritized_floor(int current_floor, int dir)
+int prioritizer_prioritized_floor(int current_floor, int dir)
 {
 
-	//Scaling to make dir respond to BUTTON_CALL_UP and BUTTON_CALL_DOWN.
+	int dir_button;
+
+	//Scaling to make dir correspond to BUTTON_CALL_UP and BUTTON_CALL_DOWN.
 	if (dir == 1){
-		dir = 0;
+		dir_button = 0;
 	}
+
 	else{
-		dir = 1;
+		dir_button = 1;
 	}
 
 	//Internal orders or external orders in corresponding direction are always prioritized.
-	if (get_order(current_floor, 2) || get_order(current_floor, dir))
-	{
+	if (get_order(current_floor, 2) || get_order(current_floor, dir_button)){
 		return 1;
 	}
 
-	if (get_order(current_floor, !dir) && orders_ahead(current_floor, dir) == -1)
-	{
+	if (get_order(current_floor, !dir_button) && orders_ahead(current_floor, dir_button) == -1){
 		return 1;
 	}
+
 	return 0;
-	
 }
 

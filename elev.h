@@ -6,6 +6,15 @@
 #define __INCLUDE_DRIVER_H__
 
 
+#include "channels.h"
+#include "io.h"
+
+#include <assert.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+
+
 // Number of floors
 #define N_FLOORS 4
 
@@ -125,8 +134,8 @@ int elev_get_button_lamp(int button, int floor);
 
 
 /*
-Starte the motor.
-@param current_floor	Elevators current floor
+Starts the motor.
+@param current_floor	Elevator's current floor
 @param desired_floor	The requested floor to go to
 */
 void elev_move_to_floor(double current_floor, int desired_floor);

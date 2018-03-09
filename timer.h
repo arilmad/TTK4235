@@ -11,7 +11,7 @@ Timer for the door
 @param reference reference time for the timer
 @return non-zero if the time is elapsed, zero otherwize
 */
-int timer(int count_s, clock_t reference);
+int timer_has_time_elapsed(int count_s, clock_t reference);
 
 
 #endif	//#ifndef __timer_H__

@@ -4,13 +4,8 @@
 // 2007, Martin Korsgaard
 
 
-#include "channels.h"
 #include "elev.h"
-#include "io.h"
 
-#include <assert.h>
-#include <stdlib.h>
-#include <stdio.h>
 
 static const int lamp_channel_matrix[N_FLOORS][N_BUTTONS] = {
     {LIGHT_UP1, LIGHT_DOWN1, LIGHT_COMMAND1},
@@ -180,30 +175,26 @@ void elev_move_to_floor(double current_floor, int desired_floor){
 	{
 		elev_set_motor_direction(DIRN_STOP);
 	}
-
 }
 
 
 void elev_enter_defined_state(void){
 
 	elev_init();
-
 	int floor = elev_get_floor_sensor_signal();
 
-	if (floor != -1)
-	{
+	if (floor != -1){
+        elev_set_floor_indicator(floor);
 		return;
 	}
 
 	elev_set_motor_direction(DIRN_UP); //Assumes we are below 4. floor.
 
-	while (floor == -1)
-	{
+	while (floor == -1){
 		floor = elev_get_floor_sensor_signal();
 	}
 
 	elev_set_motor_direction(DIRN_STOP);
-
 	elev_set_floor_indicator(floor);
 
 }

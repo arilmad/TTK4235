@@ -1,7 +1,7 @@
 #include "timer.h"
 
 
-int timer(int count_s, clock_t reference)
+int timer_has_time_elapsed(int count_s, clock_t reference)
 {
 	clock_t new_time = clock();
 

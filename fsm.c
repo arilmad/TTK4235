@@ -1,13 +1,12 @@
 #include "fsm.h"
 
-#define DOOR_OPEN_N_SECONDS 3
-
 static state_t current_state = INIT;
 static clock_t set_clock_start_reference;
+
 int requested_floor;
 int prev_floor;
 int prev_dir;
-double in_bewtween_floors;
+double in_between_floors;
 
 
 void fsm (int stop_button, int current_floor, int door_open, int current_dir) {
@@ -45,12 +44,12 @@ void fsm (int stop_button, int current_floor, int door_open, int current_dir) {
 			//Elevator calculates it's position if stop button is pressed in between floors.
 			if (current_floor == -1){
 				if(prev_dir == 1){
-					in_bewtween_floors = prev_floor + 0.5;
+					in_between_floors = prev_floor + 0.5;
 				}
 				else{
-					in_bewtween_floors = prev_floor - 0.5;
+					in_between_floors = prev_floor - 0.5;
 				}
-				current_position = in_bewtween_floors;
+				current_position = in_between_floors;
 			}
 
 
@@ -130,7 +129,7 @@ void fsm (int stop_button, int current_floor, int door_open, int current_dir) {
 		//Case purpose: Elevator is waiting for the doors to close before eventually deciding whether to 
 		//continue up, down or go to STANDBY depending on active orders.
 
-			if (timer(DOOR_OPEN_N_SECONDS, set_clock_start_reference)){
+			if (timer_has_time_elapsed(DOOR_OPEN_N_SECONDS, set_clock_start_reference)){
 				elev_set_door_open_lamp(0);
 			}
 
