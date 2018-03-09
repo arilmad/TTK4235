@@ -45,7 +45,6 @@ void receive_orders(void){
 int pending_orders(void){
 
 	for (int floor = 0; floor < N_FLOORS; floor++){
-
 		for (int button = 0; button < N_BUTTONS; button++){
 
 			if(ORDERS[floor][button])

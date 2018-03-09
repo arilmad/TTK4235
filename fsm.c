@@ -40,7 +40,7 @@ void fsm (int stop_button, int current_floor, int door_open, int current_dir) {
 			requested_floor = pending_orders();
 
 
-			//Elevator calculates it's position if stop button is pressed in between floors.
+			//Elevator calculates its position if stop button is pressed in between floors.
 			if (current_floor == -1){
 
 				if(prev_dir == 1)

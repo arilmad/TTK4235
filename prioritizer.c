@@ -1,6 +1,6 @@
 #include "prioritizer.h"
 
-int prioritizer_prioritized_floor(int current_floor, int dir){
+int prioritized_floor(int current_floor, int dir){
 
 	int dir_button;
 
