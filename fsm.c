@@ -83,7 +83,7 @@ void fsm (int stop_button, int current_floor, int door_open, int current_dir) {
 			elev_set_stop_lamp(1);
 			clear_all_orders();
 
-			while (elev_get_stop_signal()){continue;}
+			while (elev_get_stop_signal()) continue;
 			elev_set_stop_lamp(0);
 
 

@@ -15,8 +15,8 @@ int prioritizer_prioritized_floor(int current_floor, int dir){
 	if (get_order(current_floor, 2) || get_order(current_floor, dir_button))
 		return 1;
 
-	//If there are no orders in current moving direction the it will prioritize button in oposite direction.
-	if (get_order(current_floor, !dir_button) && orders_ahead(current_floor, dir_button) == -1)
+	//If there are no active orders from floors ahead of elevator, it should request to stop at current floor.
+	if (orders_ahead(current_floor, dir) == -1)
 		return 1;
 
 	return 0;
