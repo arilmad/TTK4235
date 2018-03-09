@@ -9,12 +9,11 @@ static int ORDERS[N_FLOORS][N_BUTTONS] =
 };
 
 
-int get_order_from_floor(int floor)
-{
-	for (int button = 0; button < N_BUTTONS; button++)
-	{
-		if(get_order(floor, button))
-		{
+int get_order_from_floor(int floor){
+
+	for (int button = 0; button < N_BUTTONS; button++){
+
+		if(get_order(floor, button)){
 			return 1;
 		}
 	}
@@ -22,26 +21,18 @@ int get_order_from_floor(int floor)
 }
 
 
-int get_order(int floor, int button)
-{
+int get_order(int floor, int button){
 	return ORDERS[floor][button];
 }
 
 
-void receive_orders(void)
-{
-	for (int floor = 0; floor < N_FLOORS; floor++)
-	{
-		for (int button = 0; button < N_BUTTONS; button++)
-		{
-			if ((floor == (N_FLOORS - 1)) && (button == 0))
-			{
-				continue;
-			}
-			else if ((floor == 0) && (button == 1))
-			{
-				continue;
-			}
+void receive_orders(void){
+
+	for (int floor = 0; floor < N_FLOORS; floor++){
+		for (int button = 0; button < N_BUTTONS; button++){
+
+			if ((floor == (N_FLOORS - 1)) && (button == 0)){continue;}
+			else if ((floor == 0) && (button == 1)){continue;}
 			else
 			{			
 				if(elev_get_button_signal(button, floor))

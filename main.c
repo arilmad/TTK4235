@@ -6,7 +6,6 @@
 int main(){
 	int stop_button;
 	int door_open;
-
 	int current_floor;
 	int current_dir;
 

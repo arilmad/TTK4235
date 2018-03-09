@@ -19,6 +19,7 @@ int prioritizer_prioritized_floor(int current_floor, int dir)
 		return 1;
 	}
 
+	//
 	if (get_order(current_floor, !dir_button) && orders_ahead(current_floor, dir_button) == -1){
 		return 1;
 	}

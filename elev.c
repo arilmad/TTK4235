@@ -3,7 +3,6 @@
 //
 // 2007, Martin Korsgaard
 
-
 #include "elev.h"
 
 
@@ -161,12 +160,13 @@ int elev_get_button_lamp(int button, int floor){
 }
 
 void elev_move_to_floor(double current_floor, int desired_floor){
+    
 	if (current_floor < (double)desired_floor)
 	{
 		elev_set_motor_direction(DIRN_UP);
 	}
 
-	else if (current_floor >(double)desired_floor)
+	else if (current_floor > (double)desired_floor)
 	{
 		elev_set_motor_direction(DIRN_DOWN);
 	}
