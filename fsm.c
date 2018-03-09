@@ -73,7 +73,7 @@ void fsm(){
 
 				elev_move_to_floor(current_position, requested_floor);
 
-				current_state = MOVING
+				current_state = MOVING;
 				printf("Entering moving from standby\n");	
 			}
 
