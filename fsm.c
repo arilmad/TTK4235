@@ -14,7 +14,7 @@ int current_floor;
 int current_dir;
 
 
-void fsm () {
+void fsm(){
 
 	
 	stop_button = elev_get_stop_signal();
@@ -24,7 +24,7 @@ void fsm () {
 
 	receive_orders();
 	current_position = (double)current_floor;
-	
+
 
 	if(stop_button)
 		current_state = STOP_BUTTON;
@@ -99,6 +99,7 @@ void fsm () {
 				current_state = DOOR_OPEN;
 				printf("Entering door_open from stop_button\n");
 			}
+
 			else{
 				current_state = STANDBY;
 				printf("Entering standby from stop_button\n");
