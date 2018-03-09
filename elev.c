@@ -30,7 +30,7 @@ int elev_init(void) {
         return 0;
 
     // Zero all floor button lamps
-    for (i = 0; i < N_FLOORS; ++i) {
+    for (i = 0; i < N_FLOORS; ++i){
         if (i != 0)
             elev_set_button_lamp(BUTTON_CALL_DOWN, i, 0);
 
@@ -49,7 +49,7 @@ int elev_init(void) {
     return 1;
 }
 
-void elev_set_motor_direction(elev_motor_direction_t dirn) {
+void elev_set_motor_direction(elev_motor_direction_t dirn){
     if (dirn == 0){
         io_write_analog(MOTOR, 0);
     } else if (dirn > 0) {
@@ -162,19 +162,13 @@ int elev_get_button_lamp(int button, int floor){
 void elev_move_to_floor(double current_floor, int desired_floor){
     
 	if (current_floor < (double)desired_floor)
-	{
 		elev_set_motor_direction(DIRN_UP);
-	}
-
-	else if (current_floor > (double)desired_floor)
-	{
+	 
+    else if (current_floor > (double)desired_floor)
 		elev_set_motor_direction(DIRN_DOWN);
-	}
 
 	else
-	{
 		elev_set_motor_direction(DIRN_STOP);
-	}
 }
 
 
@@ -190,9 +184,9 @@ void elev_enter_defined_state(void){
 
 	elev_set_motor_direction(DIRN_UP); //Assumes we are below 4. floor.
 
-	while (floor == -1){
+	while (floor == -1)
 		floor = elev_get_floor_sensor_signal();
-	}
+	
 
 	elev_set_motor_direction(DIRN_STOP);
 	elev_set_floor_indicator(floor);

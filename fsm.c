@@ -11,17 +11,16 @@ double in_between_floors;
 
 void fsm (int stop_button, int current_floor, int door_open, int current_dir) {
 
-
 	receive_orders();
 
 	double current_position = (double)current_floor;
 
-	if(stop_button){
+	if(stop_button)
 		current_state = STOP_BUTTON;
-	}
+	
 
 
-	switch(current_state) {
+	switch(current_state){
 
 
 		case INIT:
@@ -43,30 +42,34 @@ void fsm (int stop_button, int current_floor, int door_open, int current_dir) {
 
 			//Elevator calculates it's position if stop button is pressed in between floors.
 			if (current_floor == -1){
-				if(prev_dir == 1){
-					in_between_floors = prev_floor + 0.5;
-				}
-				else{
+
+				if(prev_dir == 1)
+					in_between_floors = prev_floor + 0.5;	
+				else
 					in_between_floors = prev_floor - 0.5;
-				}
+				
 				current_position = in_between_floors;
 			}
 
 
 
 			else if (requested_floor == current_floor){
-				current_state = DOOR_OPEN;
-				printf("Entering door_open from standby\n");
+				
 				set_clock_start_reference = clock();
 				elev_set_door_open_lamp(1);
+
+				current_state = DOOR_OPEN;
+				printf("Entering door_open from standby\n");
 				break;
 			}
 
 
 			if (requested_floor != -1){
-				current_state = MOVING;
-				printf("Entering moving from standby\n");
+
 				elev_move_to_floor(current_position, requested_floor);
+
+				current_state = MOVING;
+				printf("Entering moving from standby\n");		
 			}
 
 			break;
@@ -84,10 +87,11 @@ void fsm (int stop_button, int current_floor, int door_open, int current_dir) {
 			elev_set_stop_lamp(0);
 
 
-			if (elev_get_floor_sensor_signal() != -1)
-			{
+			if (elev_get_floor_sensor_signal() != -1){
+
 				set_clock_start_reference = clock();
 				elev_set_door_open_lamp(1);
+
 				current_state = DOOR_OPEN;
 				printf("Entering door_open from stop_button\n");
 				break;
@@ -100,7 +104,7 @@ void fsm (int stop_button, int current_floor, int door_open, int current_dir) {
 
 
 		case MOVING:
-		//Case purpose: Elevator is on it's way to a destination. Will exit state if the prioritizing 
+		//Case purpose: Elevator is on its way to a destination. Will exit state if the prioritizing 
 		//algorithm indicates that a stop is desired at current floor.
 
 			if (current_floor != -1){
@@ -129,9 +133,8 @@ void fsm (int stop_button, int current_floor, int door_open, int current_dir) {
 		//Case purpose: Elevator is waiting for the doors to close before eventually deciding whether to 
 		//continue up, down or go to STANDBY depending on active orders.
 
-			if (timer_has_time_elapsed(DOOR_OPEN_N_SECONDS, set_clock_start_reference)){
+			if (timer_has_time_elapsed(DOOR_OPEN_N_SECONDS, set_clock_start_reference))
 				elev_set_door_open_lamp(0);
-			}
 
 			if (door_open){
 				clear_orders_at_floor(current_floor);
@@ -146,12 +149,12 @@ void fsm (int stop_button, int current_floor, int door_open, int current_dir) {
 			}
 
 			//If orders_ahead returns anything above -1, the elevator has interest in continuing in current dir.
-			if (orders_ahead(current_floor, current_dir) != -1){
+			if (orders_ahead(current_floor, current_dir) != -1)
 				elev_set_motor_direction(current_dir);
-			}
-			else {
+			
+			else 
 				elev_set_motor_direction(-current_dir);
-			}
+			
 
 			current_state = MOVING;
 			printf("Entering moving from door_open\n");
