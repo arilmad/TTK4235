@@ -179,16 +179,18 @@ void elev_enter_defined_state(void){
 
 	if (floor != -1){
         elev_set_floor_indicator(floor);
-		return;
+		
 	}
+    
+    else{
+    	elev_set_motor_direction(DIRN_UP); //Assumes we are below 4. floor.
 
-	elev_set_motor_direction(DIRN_UP); //Assumes we are below 4. floor.
+    	while (floor == -1)
+    		floor = elev_get_floor_sensor_signal();
+    	
 
-	while (floor == -1)
-		floor = elev_get_floor_sensor_signal();
-	
-
-	elev_set_motor_direction(DIRN_STOP);
-	elev_set_floor_indicator(floor);
+    	elev_set_motor_direction(DIRN_STOP);
+    	elev_set_floor_indicator(floor);
+    }
 
 }

@@ -20,6 +20,6 @@ typedef enum state {
 	DOOR_OPEN = 3,
 } state_t;
 
-void fsm (int stop_button, int current_floor, int door_open, int current_dir);
+void fsm ();
 
 #endif

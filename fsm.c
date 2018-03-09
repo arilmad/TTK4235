@@ -6,25 +6,35 @@ static clock_t set_clock_start_reference;
 int requested_floor;
 int prev_floor;
 int prev_dir;
-double in_between_floors;
+double current_position;
+
+int stop_button;
+int door_open;
+int current_floor;
+int current_dir;
 
 
-void fsm (int stop_button, int current_floor, int door_open, int current_dir) {
+void fsm () {
+
+	
+	stop_button = elev_get_stop_signal();
+	door_open = elev_get_door_open_lamp();
+	current_floor = elev_get_floor_sensor_signal();
+	current_dir = elev_get_motor_direction();
 
 	receive_orders();
-
-	double current_position = (double)current_floor;
+	current_position = (double)current_floor;
+	
 
 	if(stop_button)
 		current_state = STOP_BUTTON;
-	
 
 
 	switch(current_state){
 
 
 		case INIT:
-		//Case purpose: Initialize elevator at program startup
+		//Case purpose: Initialize elevator at program startup.
 
 			elev_enter_defined_state();
 			current_state = STANDBY;
@@ -40,41 +50,35 @@ void fsm (int stop_button, int current_floor, int door_open, int current_dir) {
 			requested_floor = pending_orders();
 
 
-			//Elevator calculates its position if stop button is pressed in between floors.
-			if (current_floor == -1){
+			if ((current_floor == requested_floor) && (current_floor != -1)){
 
-				if(prev_dir == 1)
-					in_between_floors = prev_floor + 0.5;	
-				else
-					in_between_floors = prev_floor - 0.5;
-				
-				current_position = in_between_floors;
-			}
-
-
-
-			else if (requested_floor == current_floor){
-				
 				set_clock_start_reference = clock();
 				elev_set_door_open_lamp(1);
 
 				current_state = DOOR_OPEN;
 				printf("Entering door_open from standby\n");
-				break;
 			}
 
 
-			if (requested_floor != -1){
+			else if (requested_floor != -1){	
+
+				//Elevator calculates its position if stop button is pressed in between floors.
+				if (current_floor == -1){
+
+					if(prev_dir == 1)
+						current_position = prev_floor + 0.5;	
+					else
+						current_position = prev_floor - 0.5;
+				}
 
 				elev_move_to_floor(current_position, requested_floor);
 
-				current_state = MOVING;
-				printf("Entering moving from standby\n");		
+				current_state = MOVING
+				printf("Entering moving from standby\n");	
 			}
 
+			
 			break;
-
-
 
 		case STOP_BUTTON:
 		//Case purpose: Stop button has been pressed. Elevator stops immediately and clears all orders.
@@ -94,11 +98,12 @@ void fsm (int stop_button, int current_floor, int door_open, int current_dir) {
 
 				current_state = DOOR_OPEN;
 				printf("Entering door_open from stop_button\n");
-				break;
+			}
+			else{
+				current_state = STANDBY;
+				printf("Entering standby from stop_button\n");
 			}
 
-			current_state = STANDBY;
-			printf("Entering standby from stop_button\n");
 			break;
 
 
@@ -138,26 +143,26 @@ void fsm (int stop_button, int current_floor, int door_open, int current_dir) {
 
 			if (door_open){
 				clear_orders_at_floor(current_floor);
-				break;
 			}
 
 			//If there are no active orders, elevator returns to STANDBY.
-			if (pending_orders() == -1){
+			else if (pending_orders() == -1){
 				current_state = STANDBY;
 				printf("Entering standby from door_open\n");
-				break;
 			}
 
-			//If orders_ahead returns anything above -1, the elevator has interest in continuing in current dir.
-			if (orders_ahead(current_floor, current_dir) != -1)
-				elev_set_motor_direction(current_dir);
-			
-			else 
-				elev_set_motor_direction(-current_dir);
-			
+			else{
+				//If orders_ahead returns anything above -1, the elevator has interest in continuing in current dir.
+				if (orders_ahead(current_floor, current_dir) != -1)
+					elev_set_motor_direction(current_dir);			
+				else 
+					elev_set_motor_direction(-current_dir);
+				
 
-			current_state = MOVING;
-			printf("Entering moving from door_open\n");
+				current_state = MOVING;
+				printf("Entering moving from door_open\n");
+			}
+
 			break;
 	}
 }
