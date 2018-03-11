@@ -51,7 +51,7 @@ int pending_orders(void){
 				return floor;		
 		}
 	}
-
+	
 	return -1;
 }
 

@@ -177,10 +177,9 @@ void elev_enter_defined_state(void){
 	elev_init();
 	int floor = elev_get_floor_sensor_signal();
 
-	if (floor != -1){
+	if (floor != -1)
         elev_set_floor_indicator(floor);
 		
-	}
     
     else{
     	elev_set_motor_direction(DIRN_UP); //Assumes we are below 4. floor.

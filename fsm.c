@@ -143,8 +143,14 @@ void fsm(){
 				elev_set_door_open_lamp(0);
 
 			if (door_open){
+				//Requesting your own floor will always result in 3 new seconds of open door.
+				if(get_order_from_floor(current_floor))
+					set_clock_start_reference = clock();
+
 				clear_orders_at_floor(current_floor);
 			}
+
+
 
 			//If there are no active orders, elevator returns to STANDBY.
 			else if (pending_orders() == -1){
